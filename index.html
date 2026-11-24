@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sequence Quest — เกมฝึกลำดับคณิตศาสตร์</title>
+<style>
+:root{--bg:#0b1020;--panel:#141d34;--panel2:#1b2845;--text:#eef3ff;--muted:#a9b6d3;--cyan:#69e2d0;--blue:#7da7ff;--yellow:#ffd166;--pink:#ff8fa3;--green:#76e3a5;--line:#2b3a5c}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 15% 5%,#1c3155 0,transparent 32%),radial-gradient(circle at 90% 90%,#25214d 0,transparent 30%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1050px;margin:auto;padding:28px 18px 50px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:26px}.brand{font-weight:900;letter-spacing:.3px;font-size:18px}.brand span{color:var(--cyan)}.pill{border:1px solid var(--line);border-radius:999px;padding:8px 13px;color:var(--muted);font-size:13px}
+.hero{text-align:center;margin:22px auto 28px;max-width:720px}.eyebrow{color:var(--cyan);font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase}.hero h1{font-size:clamp(30px,6vw,54px);line-height:1.08;margin:12px 0}.hero p{color:var(--muted);line-height:1.7;margin:0}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0}.mode{background:linear-gradient(145deg,var(--panel),#10182b);border:1px solid var(--line);border-radius:20px;padding:20px;text-align:left;color:var(--text);cursor:pointer;transition:.2s;min-height:170px}.mode:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 12px 35px #0005}.mode .emoji{font-size:28px}.mode h3{margin:12px 0 6px;font-size:18px}.mode p{margin:0;color:var(--muted);font-size:13px;line-height:1.6}.tag{display:inline-block;margin-top:12px;padding:5px 9px;border-radius:99px;background:#263654;color:var(--cyan);font-size:11px;font-weight:700}
+.panel{background:linear-gradient(150deg,#17223c,#111a2e);border:1px solid var(--line);border-radius:24px;padding:clamp(18px,4vw,30px);box-shadow:0 20px 60px #0003}.hidden{display:none!important}.gamehead{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.back{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:14px;padding:8px 0}.stats{display:flex;gap:8px;flex-wrap:wrap}.stat{background:#0e172b;border:1px solid var(--line);padding:8px 12px;border-radius:12px;font-size:13px;color:var(--muted)}.stat b{color:var(--text);margin-left:5px}
+.progress{height:7px;background:#0b1427;border-radius:20px;overflow:hidden;margin:20px 0 26px}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--blue));transition:width .3s}
+.question-label{color:var(--muted);font-size:13px;text-align:center}.question{font-size:clamp(24px,5vw,38px);font-weight:850;text-align:center;margin:12px 0 8px;letter-spacing:1px}.hint{text-align:center;color:var(--muted);font-size:14px;margin-bottom:22px}.answers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.answer{border:1px solid var(--line);background:#1b2947;color:var(--text);border-radius:14px;padding:15px 8px;font-size:20px;font-weight:800;cursor:pointer;transition:.15s}.answer:hover{border-color:var(--cyan);background:#233657}.answer:disabled{cursor:default;opacity:.8}.answer.correct{background:#164c42;border-color:var(--green)}.answer.wrong{background:#562b3a;border-color:var(--pink)}
+.feedback{min-height:54px;margin:18px 0 4px;text-align:center;color:var(--muted);line-height:1.6}.feedback.good{color:var(--green)}.feedback.bad{color:var(--pink)}.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px}.btn{border:0;border-radius:13px;padding:12px 20px;font-weight:800;cursor:pointer;background:var(--cyan);color:#09201e}.btn.secondary{background:#263654;color:var(--text);border:1px solid var(--line)}.btn:disabled{opacity:.4;cursor:not-allowed}
+.result{text-align:center;padding:16px 0}.result .big{font-size:54px}.result h2{font-size:30px;margin:8px}.result p{color:var(--muted);line-height:1.7}.resultbox{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:22px 0}.resultbox div{background:#0e172b;border:1px solid var(--line);border-radius:14px;padding:14px 22px;color:var(--muted)}.resultbox strong{display:block;color:var(--text);font-size:24px}
+.note{color:var(--muted);font-size:12px;text-align:center;margin-top:22px;line-height:1.6}
+@media(max-width:720px){.modes{grid-template-columns:1fr}.mode{min-height:0}.answers{grid-template-columns:repeat(2,1fr)}.top{align-items:flex-start}.hero{margin-top:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><div class="brand">✦ SEQUENCE <span>QUEST</span></div><div class="pill">เกมฝึกทักษะคณิตศาสตร์</div></header>
+  <section id="home">
+    <div class="hero"><div class="eyebrow">THINK · FIND · WIN</div><h1>จับแพตเทิร์น<br>พิชิตลำดับตัวเลข</h1><p>ฝึกสังเกตความสัมพันธ์ของตัวเลข แล้วค้นหาพจน์ถัดไปให้ถูกต้อง<br>เลือกโหมดที่ชอบและเริ่มเล่นได้เลย!</p></div>
+    <div class="modes">
+      <button class="mode" onclick="startGame('practice')"><div class="emoji">🌱</div><h3>โหมดฝึกฝน</h3><p>เล่นได้เรื่อย ๆ ไม่มีจำกัดเวลา มีคำใบ้และคำอธิบายหลังตอบ</p><span class="tag">เริ่มต้น · ปานกลาง</span></button>
+      <button class="mode" onclick="startGame('challenge')"><div class="emoji">⚡</div><h3>โหมดท้าทาย</h3><p>ตอบให้ได้มากที่สุดภายใน 60 วินาที ความยากจะเพิ่มขึ้นตามข้อ</p><span class="tag">จับเวลา 60 วินาที</span></button>
+      <button class="mode" onclick="startGame('survival')"><div class="emoji">🔥</div><h3>โหมดเอาตัวรอด</h3><p>เริ่มจากข้อง่ายแล้วไต่ระดับไปเรื่อย ๆ ตอบผิดครบ 2 ครั้งจบเกม</p><span class="tag">สะสมคะแนน · เพิ่มระดับ</span></button>
+    </div>
+    <div class="note">เนื้อหาครอบคลุมลำดับเลขคณิต ลำดับเรขาคณิต ลำดับกำลังสอง และรูปแบบสลับ</div>
+  </section>
+
+  <section id="game" class="panel hidden">
+    <div class="gamehead"><button class="back" onclick="goHome()">← กลับหน้าเลือกโหมด</button><div class="stats"><div class="stat">คะแนน <b id="score">0</b></div><div class="stat" id="roundStat">ข้อ <b id="round">1</b></div><div class="stat" id="timeStat">เวลา <b id="time">60</b></div><div class="stat" id="lifeStat">พลาดได้ <b id="life">2</b></div></div></div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div id="quiz">
+      <div class="question-label" id="level">ระดับเริ่มต้น</div>
+      <div class="question" id="sequence">2, 4, 6, 8, ?</div>
+      <div class="hint" id="prompt">จงหาจำนวนที่ควรเติมลงในเครื่องหมาย ?</div>
+      <div class="answers" id="answers"></div>
+      <div class="feedback" id="feedback" aria-live="polite"></div>
+      <div class="actions"><button class="btn secondary" id="hintBtn" onclick="showHint()">ขอคำใบ้</button><button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>ข้อต่อไป →</button></div>
+    </div>
+    <div id="result" class="result hidden"></div>
+  </section>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+let mode='practice',score=0,round=1,lives=2,timeLeft=60,timer=null,current=null,answered=false,streak=0;
+const names={practice:'โหมดฝึกฝน',challenge:'โหมดท้าทาย',survival:'โหมดเอาตัวรอด'};
+function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+function makeQuestion(level){
+  // สร้างโจทย์จากกฎที่ทราบคำตอบแน่นอน
+  const types=[];
+  if(level<=1) types.push('add','sub');
+  if(level>=2) types.push('add','sub','mul','square');
+  if(level>=3) types.push('add','sub','mul','square','alternate');
+  if(level>=4) types.push('mul','square','alternate','tri');
+  const type=types[rand(0,types.length-1)];
+  let seq=[],answer,rule,hint;
+  if(type==='add'||type==='sub'){
+    const step=rand(2,level>=3?12:6)*(type==='sub'?-1:1),start=rand(2,20);
+    seq=Array.from({length:5},(_,i)=>start+step*i);answer=seq[4]+step;
+    rule=`เพิ่ม/ลดครั้งละ ${Math.abs(step)}${step<0?' (ลดลง)':''}`;hint=`ลองหาผลต่างระหว่างพจน์ที่อยู่ติดกัน จะพบว่าผลต่างเท่ากันทุกคู่`;
+  }else if(type==='mul'){
+    const ratio=rand(2,level>=4?4:3),start=rand(1,5);
+    seq=Array.from({length:5},(_,i)=>start*Math.pow(ratio,i));answer=seq[4]*ratio;
+    rule=`คูณด้วย ${ratio} ทุกครั้ง`;hint='ลองนำพจน์ถัดไปหารด้วยพจน์ก่อนหน้า เพื่อหาตัวคูณ';
+  }else if(type==='square'){
+    const start=rand(1,5),step=rand(1,3);
+    seq=Array.from({length:5},(_,i)=>Math.pow(start+i*step,2));answer=Math.pow(start+5*step,2);
+    rule='เป็นลำดับกำลังสองของจำนวนที่เพิ่มทีละ '+step;hint='ลองถอดรากที่สองของแต่ละพจน์ แล้วสังเกตลำดับใหม่';
+  }else if(type==='alternate'){
+    const a=rand(1,8),b=rand(2,9),x=rand(2,5),y=rand(1,4);
+    seq=[a,a+b,a+b+x,a+b+x+b,a+b+x+b+y];answer=seq[4]+x;
+    // รูปแบบ +b,+x สลับกัน
+    rule=`บวก ${b} และ ${x} สลับกัน`;hint='ดูผลต่างทีละคู่ อาจพบว่ามีการบวกสองจำนวนสลับกัน';
+  }else{
+    const start=rand(1,4);seq=Array.from({length:5},(_,i)=>{let n=start+i;return n*(n+1)/2});answer=(start+5)*(start+6)/2;
+    rule='ลำดับจำนวนสามเหลี่ยม';hint='ลองดูผลต่างระหว่างพจน์ จะได้ 2, 3, 4, 5, ...';
+  }
+  const display=seq.join(', ')+', ?';
+  const options=new Set([answer]);while(options.size<4){let delta=Math.max(2,Math.round(Math.abs(answer)*rand(8,25)/100));options.add(answer+ (Math.random()<.5?-delta:delta));}
+  const shuffled=[...options].sort(()=>Math.random()-.5);
+  return {seq,answer,rule,hint,options:shuffled,display,level};
+}
+function difficulty(){if(mode==='practice')return Math.min(4,Math.floor((round-1)/3)+1);if(mode==='challenge')return Math.min(4,Math.floor((round-1)/4)+1);return Math.min(4,Math.floor((round-1)/3)+1)}
+function startGame(selected){
+  mode=selected;score=0;round=1;lives=2;streak=0;timeLeft=60;
+  $('home').classList.add('hidden');$('game').classList.remove('hidden');$('quiz').classList.remove('hidden');$('result').classList.add('hidden');
+  $('timeStat').classList.toggle('hidden',mode!=='challenge');$('lifeStat').classList.toggle('hidden',mode!=='survival');
+  if(timer)clearInterval(timer);
+  if(mode==='challenge'){timer=setInterval(()=>{timeLeft--;$('time').textContent=timeLeft;if(timeLeft<=0)endGame('หมดเวลาแล้ว!');},1000);}
+  updateStats();loadQuestion();
+}
+function updateStats(){$('score').textContent=score;$('round').textContent=round;$('time').textContent=timeLeft;$('life').textContent=lives;$('roundStat').innerHTML=mode==='practice'?`โหมด <b>เล่นไม่จำกัด</b>`:`ข้อ <b>${round}</b>`;$('bar').style.width=mode==='challenge'?`${Math.max(0,timeLeft/60*100)}%`:`${((round-1)%10+1)*10}%`;}
+function loadQuestion(){
+  answered=false;current=makeQuestion(difficulty());$('level').textContent=`${names[mode]} · ${['','เริ่มต้น','พื้นฐาน','ปานกลาง','ยาก'][current.level]}`;
+  $('sequence').textContent=current.display;$('feedback').textContent='';$('feedback').className='feedback';$('nextBtn').disabled=true;$('hintBtn').disabled=false;
+  $('answers').innerHTML='';current.options.forEach(n=>{const b=document.createElement('button');b.className='answer';b.textContent=n;b.onclick=()=>choose(n,b);$('answers').appendChild(b);});
+  updateStats();
+}
+function choose(n,button){
+  if(answered)return;answered=true;const correct=n===current.answer;
+  [...$('answers').children].forEach(b=>{b.disabled=true;if(Number(b.textContent)===current.answer)b.classList.add('correct');});
+  if(correct){score+=10*current.level;streak++;$('feedback').className='feedback good';$('feedback').textContent=`ถูกต้อง! +${10*current.level} คะแนน · หลักการคือ ${current.rule}`;}
+  else{streak=0;button.classList.add('wrong');$('feedback').className='feedback bad';$('feedback').textContent=`ยังไม่ถูก คำตอบคือ ${current.answer} · ${current.rule}`;if(mode==='survival'){lives--;if(lives<=0){updateStats();setTimeout(()=>endGame('พลาดครบ 2 ครั้งแล้ว'),900);return;}}}
+  $('hintBtn').disabled=true;$('nextBtn').disabled=false;updateStats();
+}
+function showHint(){if(!current||answered)return;$('feedback').className='feedback';$('feedback').textContent='คำใบ้: '+current.hint;$('hintBtn').disabled=true;}
+function nextQuestion(){round++;loadQuestion();}
+function endGame(message){
+  if(timer){clearInterval(timer);timer=null;}$('quiz').classList.add('hidden');$('result').classList.remove('hidden');
+  const extra=mode==='challenge'?`ใช้เวลาไป ${60-timeLeft} วินาที`:`เล่นไปทั้งหมด ${round} ข้อ`;
+  $('result').innerHTML=`<div class="big">${score>=100?'🏆':score>=40?'⭐':'🎯'}</div><h2>${message}</h2><p>${names[mode]} · ${extra}</p><div class="resultbox"><div><strong>${score}</strong>คะแนน</div><div><strong>${round}</strong>ข้อ</div>${mode==='survival'?`<div><strong>${lives}</strong>โอกาสที่เหลือ</div>`:''}</div><div class="actions"><button class="btn" onclick="startGame('${mode}')">เล่นอีกครั้ง</button><button class="btn secondary" onclick="goHome()">เลือกโหมดอื่น</button></div>`;
+  updateStats();
+}
+function goHome(){if(timer){clearInterval(timer);timer=null;}$('game').classList.add('hidden');$('home').classList.remove('hidden');}
+</script>
+</body>
+</html>
